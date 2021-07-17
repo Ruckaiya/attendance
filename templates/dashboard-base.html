@@ -1,0 +1,206 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <script src=" {% static 'assets/js/fontawsome.js' %} "></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href=" {% static 'dashboard/css/dashboard.css' %} " />
+
+  <style></style>
+</head>
+
+<body>
+  <div id="dashboard-slidebar" class="dashboard-sidebar">
+    <div class="dashboard-slidebar-cont">
+      <a href="/dashboard/" class="dashboard-logo-cont item-margin-top">
+        <div class="dashboard-logo"></div>
+        <h3 class="dashboard-logo-text">Blood Support</h3>
+      </a>
+
+      <a href="/dashboard/" class="dashboard-profile-cont item-margin-top">
+        <div class="dashboard-profile-img"></div>
+        <h3 class="dashboard-profile-name">Jimam Tamimi</h3>
+      </a>
+
+      <div class="dashboard-nav-item">
+        <a href="/dashboard/" class="dashboard-nav-link dashboard-active">
+          <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
+          <p>Dashboard</p>
+        </a>
+      </div>
+
+      <div class="dashboard-nav-item dashboard-drop-down-nav-item">
+        <a onclick="showOptions()" class="dashboard-nav-link dashboard-parent-dropdown">
+          <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
+          <p>Current Links</p>
+          <span class="dashboard-nav-badge">3</span>
+          <i class="fas fa-angle-left dashboard-dropdown-icon"></i>
+        </a>
+        <a style="margin-left: 15px;" href="/links/{{linkTitle}}/{{linkId}}" class="dashboard-nav-link dashboard-drop-down-link ml-1">
+          <i class="dashboard-nav-icon fas fa-link"></i>
+          <p>WSB English (<span class="time" time-in="minutes">3.5 M</span>) </p>
+        </a>
+
+
+      </div>
+
+      <div class="dashboard-nav-item">
+        <a href="/classes/" class="dashboard-nav-link">
+          <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
+          <p>Classes</p>
+        </a>
+      </div>
+      <div class="dashboard-nav-item">
+        <a href="/links/" class="dashboard-nav-link">
+          <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
+          <p>Links</p>
+        </a>
+      </div>
+      <div class="dashboard-nav-item">
+        <a href="/students/" class="dashboard-nav-link">
+          <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
+          <p>Students</p>
+        </a>
+      </div>
+      <div class="dashboard-nav-item">
+        <a href="/Student Request/" class="dashboard-nav-link">
+          <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
+          <p>Students</p>
+        </a>
+      </div>
+      <div class="dashboard-nav-item">
+        <a href="/dashboard.html" class="dashboard-nav-link">
+          <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
+          <p>Help People</p>
+        </a>
+      </div>
+      <p class="dashboard-nav-header">Contact Options</p>
+      <hr />
+      <div class="dashboard-nav-item">
+        <a href="/dashboard.html" class="dashboard-nav-link">
+          <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
+          <p>Messages</p>
+        </a>
+      </div>
+
+      <p class="dashboard-nav-header">Profile Options</p>
+      <hr />
+
+      <div class="dashboard-nav-item">
+        <a href="/dashboard.html" class="dashboard-nav-link">
+          <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
+          <p>My Profile</p>
+        </a>
+      </div>
+
+      <p class="dashboard-nav-header">Settings</p>
+      <hr />
+
+      <div class="dashboard-nav-item dashboard-drop-down-nav-item">
+        <a onclick="showOptions()" class="dashboard-nav-link dashboard-parent-dropdown">
+          <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
+          <p>Settings</p>
+          <i class="fas fa-angle-left dashboard-dropdown-icon"></i>
+        </a>
+        <a href="/dashboard.html" class="dashboard-nav-link dashboard-drop-down-link">
+          <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
+          <p>Help People</p>
+        </a>
+        <a href="/dashboard.html" class="dashboard-nav-link dashboard-drop-down-link">
+          <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
+          <p>Help People</p>
+        </a>
+        <a href="/dashboard.html" class="dashboard-nav-link dashboard-drop-down-link">
+          <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
+          <p>Help People</p>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div id="dashboard-content-wraper" class="dashboard-content-wraper">
+    <div class="dashboard-navbar-cont">
+      <nav class="dashboard-navbar">
+        <ul class="dashboard-nav-item-wraper">
+          <li id="dashboard-slidebar-icon" class="dashboard-slidebar-toggler-wraper">
+            <i class="fas fa-bars dashboard-slidebar-toggler" aria-hidden="true"></i>
+          </li>
+          <li>
+            <form class="dashboard-search-box-wraper">
+              <input placeholder="Search" type="text" class="dashboard-search-box" />
+              <button class="dashboard-search-submit" type="submit">
+                <i class="fas fa-search" aria-hidden="true"></i>
+              </button>
+            </form>
+          </li>
+        </ul>
+
+        <ul class="dashboard-right-nav-icons">
+          <form id="logoutForm" action="/accounts/logout/" method="POST">
+            {% csrf_token %}
+            <li onclick="logoutForm.submit()" class="dashboard-right-nav-icon-wraper">
+              <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+            </li>
+          </form>
+
+          <li id="dashboard-message-icon" class="dashboard-right-nav-icon-wraper">
+            <i class="far fa-comment-dots"></i> <span class="dashboard-badge">33</span>
+          </li>
+          <div id="dashboard-message-icon-dropdown" class="dashboard-message-dropdown-cont dashboard-hide-dropdown">
+            <div class="dashboard-message-dropdown">
+              
+              <div class="dashboard-message">
+                <div style="    background-image: url(https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500);" class="messager-img"></div>
+                <div class="dashboard-message-details">
+                  <h5 class="dashboard-messager-name">Jimam tamimi</h5>
+                  <p class="dashboard-message-text">A quick brown fox jumped... - <span>3 Hours</span></p>
+                </div>
+                
+              </div>
+              
+              
+            </div>
+          </div>
+          <li id="dashboard-notification-icon" class="dashboard-right-nav-icon-wraper">
+            <i class="far fa-bell"></i><span class="dashboard-badge" style="left: 16.5px">33</span>
+          </li>
+          <div id="dashboard-notification-icon-dropdown" class=" dashboard-message-dropdown-cont dashboard-notification-dropdown-cont dashboard-hide-dropdown
+              ">
+            <div class="dashboard-notification-dropdown">
+              <div class="dashboard-notification">
+                <div style="    background-image: url(https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500);" class="dashboard-notification-img"></div>
+                <div class="dashboard-notification-details">
+                  <h5 class="dashboard-notification-name">Jimam tamimi</h5>
+                  <p class="dashboard-notification-text">A quick brown fox jumped... - <span>3 Hours</span></p>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          <li id="dashboard-go-full-screen-icon" class="dashboard-right-nav-icon-wraper">
+            <i class="fas fa-expand-arrows-alt"></i>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="dashboard-content"></div>
+    <footer class="dashboard-footer-cont">
+      <div class="dashboard-footer">
+        <strong>Copyright © 2014-2020
+          <a class="dashboard-footer-link" href="#">World School Of BD</a>.</strong>
+      </div>
+    </footer>
+  </div>
+
+  <script src=" {% static 'dashboard/js/dashboard.js' %} "></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

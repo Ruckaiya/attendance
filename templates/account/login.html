@@ -1,0 +1,31 @@
+{% extends 'account-base.html' %}
+
+{% block title %}Account | Login{% endblock title %}
+
+{% block content %}
+
+ <div class="container mt-4">
+    <h1 class="h3 mb-3 fw-normal"> Enter Your Email And Password To Sign In</h1>
+
+        <form action="/accounts/login/" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input  required name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email Address"> 
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input required  name="password" placeholder="Password" type="password" class="form-control" id="exampleInputPassword1">
+            </div>
+
+            <div class="mb-3">
+                If you don't have an account, PLease <a href="/accounts/signup/" class="link-primary">Signup</a> First!
+            </div>
+
+            <div class="d-grid gap-2">
+                <button name="login" class="btn btn-primary" type="submit">Login</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock content %}

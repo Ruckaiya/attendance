@@ -1,0 +1,100 @@
+{% extends 'account-base.html' %}
+
+{% block title %}Account | SignUp{% endblock title %}
+
+{% block content %}
+
+
+<main class="form-signin">
+      <div class="container mt-4">
+    <h1 class="h3 mb-3 fw-normal"> Enter Your Email And Password To Sign Up</h1>
+
+        <form action="/accounts/signup/" method="POST"  enctype="multipart/form-data ">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input required type="email" placeholder="Email Address" class="form-control" id="email" aria-describedby="emailHelp" name="email">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input requiredt name="password" placeholder="Password"  type="password" class="form-control" id="password">
+                <p style="font-weight: 700;" id="passAlert" class=""></p>
+            </div>
+            <div class="mb-3">
+                <label for="cpassword" class="form-label">Confirm Password</label>
+                <input required name="cpassword"  placeholder="Confirm Password"  type="password" class="form-control" id="cpassword">
+                <p style="font-weight: 700;" id="cpassword-alert" class=""></p>
+            </div>
+            <div class="mb-3">
+                If you already have an account, PLease <a href="/accounts/login/" class="link-primary">Login</a>!
+            </div>
+
+            <div class="d-grid gap-2">
+                <button name="signup" id="signup" class="btn btn-primary" type="submit">Sign Up</button>
+            </div>
+        </form>
+    </div>
+
+
+
+{% endblock content %}
+
+
+{% block js %}
+
+<script>
+    let email = document.getElementById('email')
+    let password = document.getElementById('password')
+    let cpassword = document.getElementById('cpassword')
+    let cPassAlert = document.getElementById('cpassword-alert')
+
+    cpassword.addEventListener('keyup', ()=>{
+        if(cpassword.value != password.value){
+            cPassAlert.innerHTML = 'Passwords does not match.'
+            cPassAlert.style.display = 'block'
+            cPassAlert.classList.add('text-danger')
+            signup.classList.add('disabled')
+           
+        }
+        else{
+            cPassAlert.innerHTML = 'Passwords Match Corectly.'
+            cPassAlert.style.display = 'block'
+            cPassAlert.classList.remove('text-danger')   
+            cPassAlert.classList.add('text-success')  
+             if(password.value.length < 4){
+                passAlert.innerHTML = 'Password Must Be At Least 4 Charecter.'
+                passAlert.style.display = 'block'
+                passAlert.classList.add('text-danger')
+                signup.classList.add('disabled')
+            }
+            else{
+                passAlert.innerHTML = 'Password Is Ok.'
+                passAlert.style.display = 'block'
+                passAlert.classList.remove('text-danger')   
+                passAlert.classList.add('text-success')   
+                signup.classList.remove('disabled')
+            }
+
+        }
+    })
+    password.addEventListener('keyup', ()=>{
+        if(password.value.length < 4){
+            passAlert.innerHTML = 'Password Must Be At Least 4 Charecter.'
+            passAlert.style.display = 'block'
+            passAlert.classList.add('text-danger')
+            signup.classList.add('disabled')
+        }
+        else{
+            passAlert.innerHTML = 'Password Is Ok.'
+            passAlert.classList.remove('text-danger')   
+            passAlert.style.display = 'block'
+            passAlert.classList.add('text-success')   
+            if(cpassword.value == password.value){
+                signup.classList.remove('disabled')
+            }
+        }
+    })
+    
+</script>
+
+{% endblock js %}
