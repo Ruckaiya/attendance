@@ -63,4 +63,17 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     
 
     def __str__(self):
-        return self.email
+        return str(self.email)
+
+
+class Profile(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, blank=False)
+    first_name = models.CharField("First Name", max_length=10, blank=False)
+    last_name = models.CharField("Last Name", max_length=10, blank=False)
+    age = models.PositiveIntegerField("Age", blank=False)
+    number = models.CharField("Phone Number", max_length=30, blank=False)
+    timeStamp = models.DateTimeField(auto_now_add=True, blank=True)
+
+    
+    def __str__(self):
+        return str(self.user)

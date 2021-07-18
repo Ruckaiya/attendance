@@ -5,12 +5,6 @@ from django.contrib.auth import authenticate, login, logout
 from home.models import MyUser
 
 # Create your views here.
-def accounts(request):
-    if(request.method == "GET"):
-        return HttpResponse("account")
-
-
-
     
 def loginUser(request):
     if(request.user.is_authenticated):

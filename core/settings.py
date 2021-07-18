@@ -68,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'home.context_processors.animations',
             ],
         },
     },
@@ -80,19 +81,19 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
-
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': "attendance",
-        'USER': 'postgres',
-        'PASSWORD': 'admin',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
+
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': "attendance",
+    #     'USER': 'postgres',
+    #     'PASSWORD': 'admin',
+    #     'HOST': 'localhost',
+    #     'PORT': '',
+    # }
     
     
 }
@@ -122,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Dhaka'
 
 USE_I18N = True
 
@@ -166,3 +167,6 @@ MESSAGE_TAGS = {
     messages.INFO: 'info',
     messages.ERROR: 'danger',
 }
+
+TOKEN_LENGTH = 80
+CODE_LENGTH = 5
