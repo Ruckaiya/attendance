@@ -1,7 +1,7 @@
 from time import time
 from django.db.models.deletion import CASCADE
 from django.db import models
-from home.models import Profile
+from home.models import MyUser
 import random
 import string
 from django.utils import timezone
@@ -13,7 +13,7 @@ def generate_code():
 
 # Create your models here.
 class Student(models.Model):
-    student = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    student = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     timeStamp = models.DateTimeField(auto_now_add=True, blank=True)
     
     def __str__(self):

@@ -53,6 +53,11 @@ def signup(request):
             email = request.POST['email']
             password = request.POST['password']
             cPassword = request.POST['cpassword']
+            first_name = request.POST['first-name']
+            last_name = request.POST['last-name']
+            age = request.POST['age']
+            number = request.POST['number']
+            addtional_number = request.POST['add-number']
             # validating
             if(cPassword != password):
                 messages.error(request, 'Password and Confirm Password Does Not Matach !! Please Try Again')
@@ -63,7 +68,7 @@ def signup(request):
             users = MyUser.objects.filter(email=email)
             if(len(users) == 0):
                 try:
-                    user = MyUser.objects.create_user(email=email, password=password)
+                    user = MyUser.objects.create_user(email=email, password=password, first_name=first_name, last_name=last_name, age=age, number=number, addtional_number=addtional_number)
                     user.save()
                     try:
                         authUser = authenticate(request, email=email, password=password)

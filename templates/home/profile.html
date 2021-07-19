@@ -1,0 +1,42 @@
+{% extends 'dashboard-base.html' %}
+
+{% block title %}WSB | My Profile{% endblock title %}
+
+
+{% block content %}
+
+<form class="row g-3">
+    {% csrf_token %}
+  <div class="col-md-12">
+    <label for="email" class="form-label">Email</label>
+    <input  readonly value="{{email}}"  type="email" class="form-control" id="email"  placeholder="Email">
+  </div>
+  <div class="col-md-6">
+    <label for="first-name" class="form-label">First Name</label>
+    <input  readonly value="{{fName}}" type="text" class="form-control" id="first-name"  name="first-name" placeholder="First Name">
+  </div>
+  <div class="col-md-6">
+    <label for="first-name" class="form-label">Last Name</label>
+    <input  readonly value="{{lName}}"   type="text" class="form-control" id="last-name" name="last-name" placeholder="Last Name">
+  </div>
+  <div class="col-2">
+    <label for="age" class="form-label">Age</label>
+    <input  readonly value="{{age}}"   type="number" class="form-control" id="age"    placeholder="Age">
+  </div>
+  <div class="col-5">
+    <label for="number" class="form-label">Number</label>
+    <input  readonly value="{{number}}"    type="tel" class="form-control" id="number" placeholder="Number"  >
+  </div>
+  <div class="col-5">
+    <label for="add-number" class="form-label">Addtional Number</label>
+    <input  readonly  value="{{addNumber}}"  type="tel" class="form-control" id="add-number" placeholder="Addtional Number"  >
+  </div>
+  <div class="col-12">
+  </div>
+</form>
+
+
+{% endblock content %}
+
+
+{% block profile %}dashboard-active{% endblock profile %}

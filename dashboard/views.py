@@ -1,10 +1,11 @@
+from home.models import MyUser
 from django.core import exceptions
 from django.db import models
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from dashboard.models import Class, Link
+from dashboard.models import Attendance, Class, Link, Student
 from datetime import  timedelta
 from django.utils import timezone
 from django.contrib import messages
@@ -62,7 +63,8 @@ def links(request, slug=None, id=None):
         all_classes = Class.objects.all().order_by('-id')
         context = {
             'links': all_links,
-            'classes': all_classes
+            'classes': all_classes,
+            'attendance': Attendance.objects.all().order_by('-id'),
         }
         return render(request, 'dashboard/links.html', context)
 
@@ -70,10 +72,99 @@ def links(request, slug=None, id=None):
 @staff_member_required
 def classes(request, slug=None, id=None):
     return HttpResponse("classes")
+    
 
     
 @staff_member_required
+def studentRequest(request):
+    if(request.method == 'GET'):
+        students = MyUser.objects.filter(is_student=False, is_staff=False, in_draft=False)
+        
+        context = {
+            'students':students
+        }
+        
+        return render(request, 'dashboard/student-requests.html', context)
+    elif(request.method == 'POST'):
+        action = request.POST['action']
+        id = request.POST['id']
+        if(action == 'accept'):
+            user = MyUser.objects.filter(id=id)
+            if(len(user) != 0):
+                user = user.first()
+                user.is_student = True
+                user.in_draft = False
+                user.save()
+                student = Student.objects.create(student=user)
+                student.save()
+                messages.success(request, 'Success fully added to student list.')
+                return redirect('/dashboard/students/requests/')
+            else:
+                messages.error(request, 'This student request is not available..')
+                return redirect('/dashboard/students/requests/')  
+                
+        elif(action == 'reject'):
+            user = MyUser.objects.filter(id=id)
+            if(len(user) != 0):
+                user = user.first()
+                user.is_student = False
+                user.in_draft = True
+                user.save()
+                messages.success(request, 'Success fully added to drafts.')
+                return redirect('/dashboard/students/requests/')
+            else:
+                messages.error(request, 'This student request is not available..')
+                return redirect('/dashboard/students/requests/')  
+
+
+
+
+@staff_member_required
 def students(request, id=None):
-    return HttpResponse("students")
+    if(request.method == 'GET'):
+        students = Student.objects.all()
+        print(students)
+        studentList = []
+        for student in students:
+            if(student.student in MyUser.objects.filter(is_active=True, is_student=True, in_draft=False)):
+                studentList.append(student)
+        context = {
+            'students':studentList
+        }
+        
+    return render(request, 'dashboard/students.html', context)
+
+
+@staff_member_required
+def studentDraft(request):
+    if(request.method == 'GET'):
+        students = MyUser.objects.filter(is_student=False, is_staff=False, in_draft=True)
+        context = {
+            'students':students
+        }
+        print(context)
+        return render(request, 'dashboard/draft.html', context)
+    elif(request.method == 'POST'):
+        action = request.POST['action']
+        id = request.POST['id']
+        if(action == 'add-to-students'):
+            user = MyUser.objects.filter(id=id)
+            if(len(user) != 0):
+                user = user.first()
+                user.is_student = True
+                user.in_draft = False
+                user.save()
+                student = Student.objects.create(student=user)
+                student.save()
+                messages.success(request, 'Success fully added to students.')
+                return redirect('/dashboard/students/draft/')
+        elif(action == 'delete'):
+            pass
+        students = MyUser.objects.filter(is_student=False, is_staff=False, in_draft=True)
+        context = {
+            'students':students
+        }
+        print(context)
+        return render(request, 'dashboard/draft.html', context)
 
     

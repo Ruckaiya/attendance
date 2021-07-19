@@ -15,6 +15,15 @@
     margin-top: 20px;
     margin-bottom: 10px;
     }
+
+    .link-details-container{
+        width: 95%;
+        height: 90%;
+        margin: auto auto;
+        overflow: auto;
+    }
+    
+    
 </style>
 {% endblock css %}
 
@@ -93,17 +102,31 @@
       </tr>
     </thead>
     <tbody>
+    {% load poll_extras  %}
 
         {% for link in links %}
           
-            <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions" style="cursor: pointer;">
+            <tr data-bs-toggle="offcanvas" data-bs-target="#{{link.token|makeClass}}" aria-controls="{{link.token|makeClass}}" style="cursor: pointer;">
                 <th scope="row">{{forloop.counter}}</th>
                 <td>{{link.class_name}}</td>
                 <td>{{link.code}}</td>
                 <td>{{link.timestamp}}</td>
                 <td>{{link.expiry}}</td>
             </tr>
-        
+                        
+            <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="{{link.token|makeClass}}" aria-labelledby="{{link.token|makeClass}}Label">
+                <div class="link-details-container">
+                    <h2 class="my-3"><b><u>{{link.class_name}}</u></b></h2>
+                    <h5 class="my-3"><b>Time Created: </b> {{link.timestamp}}</h5>
+                    <h5 class="my-3"><b>Expiry: </b> {{link.expiry}}</h5>
+                    <div class="my-3">
+                        
+                        <p><b>Link: </b> <input onclick="copyText(this)" class="text-primary" style="width: 90%; outline: none; border: none; cursor: pointer;" type="text" readonly="true"   id="{{link.token|makeClass}}-id" value="{{BASE_URL}}attdance/token/{{link.token}}/"> </p>
+                    </div>
+                    <h5 class="my-3"><b>Code: </b> {{link.code}}</h5>
+                    <button class="btn btn-primary my-3">View</button>
+                </div>
+            </div>        
         {% endfor %}
         
       
@@ -114,19 +137,33 @@
 </div>
 
 
-<div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Backdroped with scrolling</h5>
-    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
-    <p>Try scrolling the rest of the page to see this option in action.</p>
-  </div>
-</div>
-
 
 
 
 
 
 {% endblock content %}
+
+
+{% block js %}
+
+<script>
+    function copyText(e) {
+  /* Get the text field */
+    
+    var copyElm = e
+  /* Select the text field */
+  copyElm.focus();
+  copyElm.select();
+  copyElm.setSelectionRange(0, 99999); /* For mobile devices */
+
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+
+  /* Alert the copied text */
+  alert("Your link has been copied successfully!!");
+}
+</script>
+
+
+{% endblock js %}

@@ -1,0 +1,42 @@
+{% extends 'dashboard-base.html' %}
+
+{% block title %}WSB | Edit Profile{% endblock title %}
+
+
+{% block content %}
+<form method="POST" action="/profile/edit/" class="row g-3">
+    {% csrf_token %}
+  <div class="col-md-12">
+    <label for="email" class="form-label">Email</label>
+    <input required value="{{email}}"  type="email" class="form-control" id="email"  name="email" placeholder="Email">
+  </div>
+  <div class="col-md-6">
+    <label for="first-name" class="form-label">First Name</label>
+    <input required value="{{fName}}" type="text" class="form-control" id="first-name"  name="first-name" placeholder="First Name">
+  </div>
+  <div class="col-md-6">
+    <label for="first-name" class="form-label">Last Name</label>
+    <input required value="{{lName}}"   type="text" class="form-control" id="last-name" name="last-name" placeholder="Last Name">
+  </div>
+  <div class="col-2">
+    <label for="age" class="form-label">Age</label>
+    <input required value="{{age}}"   type="number" class="form-control" id="age"   name="age" placeholder="Age">
+  </div>
+  <div class="col-5">
+    <label for="number" class="form-label">Number</label>
+    <input required value="{{number}}"    type="tel" class="form-control" id="number" placeholder="Number"  name="number">
+  </div>
+  <div class="col-5">
+    <label for="add-number" class="form-label">Addtional Number</label>
+    <input required  value="{{addNumber}}"  type="tel" class="form-control" id="add-number" placeholder="Addtional Number"  name="add-number">
+  </div>
+  <div class="col-12">
+    <button  type="submit" class="btn btn-primary">Save</button>
+  </div>
+</form>
+
+
+{% endblock content %}
+
+
+{% block edit-profile %}dashboard-active{% endblock edit-profile %}
