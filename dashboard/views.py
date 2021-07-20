@@ -278,8 +278,14 @@ def studentDraft(request):
 def attendance(request):
     if request.method == 'GET':
         # queryset = queryset.filter(date_created__range=(active_on, next_day) )
-        attendance = Attendance.objects.filter(attendance_date__range=(datetime.datetime(2020, 5, 5, 5, 5, 55, 55) ,timezone.now()))
-        print(attendance)
+        rangeMin = timezone.now() - datetime.timedelta(days=30)
+        rangeMax = timezone.now()
+        attendance = Attendance.objects.filter(attendance_date__range=(rangeMin, rangeMax))
+        print(rangeMin)
+        print(rangeMax)
+        context = {
+            'attendance':attendance
+        }
     return render(request, 'dashboard/attendance.html')
     
 
