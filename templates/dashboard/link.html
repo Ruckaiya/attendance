@@ -1,0 +1,142 @@
+{% extends 'dashboard-base.html' %}
+{% block title %}WSB | {{class.name}}{% endblock title %}
+{% block links %}dashboard-active{% endblock links%}
+
+
+
+{% block css %}
+<style>
+    .offcanvas {
+        width: 80vw !important;
+    }
+    .create-container{
+        display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    }
+
+    .link-details-container{
+        width: 95%;
+        height: 90%;
+        margin: auto auto;
+        overflow: auto;
+    }
+    
+    
+</style>
+{% endblock css %}
+
+
+{% block content %}
+
+
+
+<!-- Button trigger modal -->
+<div class="create-container">
+    {% comment %} <form id="deleteClassForm" action="/dashboard/classes/{{class.id}}/" method="post">
+        <input type="hidden" name="type" value="class-delete">
+        {% csrf_token %}
+    </form>
+    <button type="button" class="btn btn-danger ml-auto" onclick="deleteClass()" >
+        Delete Class 
+    </button>
+    <button type="button" class="btn btn-primary " style="margin-left: 10px;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Add Student 
+    </button> {% endcomment %}
+</div>
+  
+<!--  Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Link</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <form action="/dashboard/classes/{{class.id}}/" method="POST">
+        <input type="hidden" name="type" value="student-add">
+        {% csrf_token %}
+        <div class="modal-body">
+            
+            <div class="mb-3">
+                <select name="students" required class="form-select" multiple aria-label="multiple select example">
+                    <option selected disabled >Students</option>
+                    {% for student in students %}
+                    {% if student not  in class.students.all %}
+                    <option   value="{{student.id}}">{{student.student.first_name|capfirst}} {{student.student.last_name|capfirst}} {{student.id}}</option> {% endif %} 
+                    {% endfor %}
+                </select>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="reset" class="btn btn-secondary">Reset</button>
+                <button type="submit" class="btn btn-primary">Add To Class</button>
+        </div>
+    </form>
+    </div>
+</div>
+</div>
+
+
+
+<div class="class-details">
+    <h4><b>Class Name: </b> {{link.class_name.name}}</h4>
+    <h4><b>Class Time: </b> {{link.class_name.time}}</h4>
+    <h4><b>Link Created: </b> {{link.timestamp}}</h4>
+    <h4><b>Link Expiry: </b> {{link.expiry}}</h4>
+</div>
+
+
+<table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">ID</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% load poll_extras  %}
+
+        {% for attend in attendance %}
+          
+            <tr   style="cursor: pointer;">
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{attend.student.student.first_name|capfirst}} {{attend.student.student.last_name|capfirst}}</td>
+                <td>{{attend.student.student.id}}</td>
+                        
+             
+        {% endfor %}
+        
+      
+    </tbody>
+  </table>
+<div >
+    
+</div>
+
+
+
+
+
+
+
+{% endblock content %}
+
+
+{% block js %}
+
+<script>
+    function deleteClass() {
+        let deleteCls = confirm('Are you sure you want to delete this class?')
+        console.log(deleteCls)
+        if(deleteCls){
+            deleteClassForm.submit()
+        }
+    }
+</script>
+
+
+{% endblock js %}

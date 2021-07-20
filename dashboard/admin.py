@@ -24,5 +24,5 @@ class LinkAdmin(admin.ModelAdmin):
 
 @admin.register(Attendance)
 class AttendanceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'student', 'class_name', 'attendance_date', 'attendance_time', 'link')
+    list_display = ('id', 'student',  'attendance_date', 'attendance_time', 'link')
     ordering = ['id']

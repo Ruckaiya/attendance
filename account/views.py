@@ -11,11 +11,10 @@ def loginUser(request):
         return HttpResponseNotFound()
     else:
         if(request.method == "GET"):
-            print(request.user.is_authenticated)
+          
             return render(request, 'account/login.html')
 
         if(request.method == 'POST'):
-
             email = request.POST['email']
             password = request.POST['password']
             try:

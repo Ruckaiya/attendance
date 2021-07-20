@@ -1,0 +1,154 @@
+{% extends 'dashboard-base.html' %}
+{% block title %}WSB | {{class.name}}{% endblock title %}
+{% block classes %}dashboard-active{% endblock classes %}
+
+
+
+{% block css %}
+<style>
+    .offcanvas {
+        width: 80vw !important;
+    }
+    .create-container{
+        display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    }
+
+    .link-details-container{
+        width: 95%;
+        height: 90%;
+        margin: auto auto;
+        overflow: auto;
+    }
+    
+    
+</style>
+{% endblock css %}
+
+
+{% block content %}
+
+
+
+<!-- Button trigger modal -->
+<div class="create-container">
+    <form id="deleteClassForm" action="/dashboard/classes/{{class.id}}/" method="post">
+        <input type="hidden" name="type" value="class-delete">
+        {% csrf_token %}
+    </form>
+    <button type="button" class="btn btn-danger ml-auto" onclick="deleteClass()" >
+        Delete Class 
+    </button>
+    <button type="button" class="btn btn-primary " style="margin-left: 10px;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Add Student 
+    </button>
+</div>
+  
+<!--  Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Link</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <form action="/dashboard/classes/{{class.id}}/" method="POST">
+        <input type="hidden" name="type" value="student-add">
+        {% csrf_token %}
+        <div class="modal-body">
+            
+            <div class="mb-3">
+                <select name="students" required class="form-select" multiple aria-label="multiple select example">
+                    <option selected disabled >Students</option>
+                    {% for student in students %}
+                    {% if student not  in class.students.all %}
+                    <option   value="{{student.id}}">{{student.student.first_name|capfirst}} {{student.student.last_name|capfirst}} {{student.id}}</option>
+                    {% endif %} 
+                    {% endfor %}
+                </select>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="reset" class="btn btn-secondary">Reset</button>
+                <button type="submit" class="btn btn-primary">Add To Class</button>
+        </div>
+    </form>
+    </div>
+</div>
+</div>
+
+
+
+<div class="class-details">
+    <h4><b>Class Name: </b> {{class.name}}</h4>
+    <h4><b>Class Time: </b> {{class.time}}</h4>
+    <h4><b>Class Length: </b> {{class.students.all|length}}</h4>
+</div>
+
+
+<table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Attended In This Month</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% load poll_extras  %}
+
+        {% for students in class.students.all %}
+          
+            <tr   style="cursor: pointer;">
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{student.student.first_name|capfirst}} {{student.student.last_name|capfirst}}</td>
+                <td>{{class.time}}</td>
+                <td>
+                    
+                    <form  action="/dashboard/classes/{{class.id}}/" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="type" value="student-delete">
+                        <input type="hidden" name="student-id" value="{{student.id}}">
+                        <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                    </form>
+                    
+                </td>          
+            </tr>
+                        
+             
+        {% endfor %}
+        
+      
+    </tbody>
+  </table>
+<div >
+    
+</div>
+
+
+
+
+
+
+
+{% endblock content %}
+
+
+{% block js %}
+
+<script>
+    function deleteClass() {
+        let deleteCls = confirm('Are you sure you want to delete this class?')
+        console.log(deleteCls)
+        if(deleteCls){
+            deleteClassForm.submit()
+        }
+    }
+</script>
+
+
+{% endblock js %}

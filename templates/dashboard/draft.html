@@ -29,7 +29,7 @@
                 <td>{{student.age}}</td>
                 <td>{{student.number}}</td>
                 <td>
-                    <form action="/dashboard/students/drafts/" method="post">
+                    <form action="/dashboard/students/draft/" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="id" value="{{student.id}}">
                         <button type="submit" value="add-to-students" name="action" class="btn btn-primary btn-sm m-1">Add So Students</button>

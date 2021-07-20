@@ -12,18 +12,31 @@ def baseUrl(request):
         'BASE_URL': settings.BASE_URL
     }
 def roll(request):
-    if(not request.user.is_student and request.user.is_staff == False):
+    if(request.user.is_authenticated):
+        if(not request.user.is_student and request.user.is_staff == False):
+            return {
+                'is_student': False,
+                'is_staff': False,
+            }
+        if(request.user.is_student):
+            return {
+                'is_student': True, 
+                'is_staff': False,
+            }
+        if(request.user.is_staff):
+            return {
+                'is_staff': True,
+                'is_student': False, 
+            }
+        if(request.user.in_draft):
+            return {
+                'is_staff': False,
+                'is_student': False, 
+                'in_draft': True, 
+            }
+    else:
+
         return {
-            'is_student': False,
             'is_staff': False,
-        }
-    if(request.user.is_student):
-        return {
-            'is_student': True, 
-            'is_staff': False,
-        }
-    if(request.user.is_staff):
-        return {
-            'is_staff': True,
             'is_student': False, 
         }

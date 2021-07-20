@@ -121,10 +121,9 @@
                     <h5 class="my-3"><b>Expiry: </b> {{link.expiry}}</h5>
                     <div class="my-3">
                         
-                        <p><b>Link: </b> <input onclick="copyText(this)" class="text-primary" style="width: 90%; outline: none; border: none; cursor: pointer;" type="text" readonly="true"   id="{{link.token|makeClass}}-id" value="{{BASE_URL}}attdance/token/{{link.token}}/"> </p>
+                        <p><b>Link: </b> <input onclick="copyText(this)" class="text-primary" style="width: 90%; outline: none; border: none; cursor: pointer;" type="text" readonly="true"   id="{{link.token|makeClass}}-id" value="{{BASE_URL}}attendance/token/{{link.token}}/"> </p>
                     </div>
-                    <h5 class="my-3"><b>Code: </b> {{link.code}}</h5>
-                    <button class="btn btn-primary my-3">View</button>
+                    <button onclick="forword('/dashboard/links/{{link.id}}/')" class="btn btn-primary my-3">View</button>
                 </div>
             </div>        
         {% endfor %}
@@ -162,6 +161,11 @@
 
   /* Alert the copied text */
   alert("Your link has been copied successfully!!");
+}
+
+
+function forword(to){
+    window.location = to
 }
 </script>
 

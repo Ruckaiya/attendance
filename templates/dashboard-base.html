@@ -87,7 +87,7 @@
           </a>
         </div>
         <div class="dashboard-nav-item">
-          <a href="/dashboard/draft/" class="dashboard-nav-link {% block draft %}{% endblock draft %}">
+          <a href="/dashboard/students/draft/" class="dashboard-nav-link {% block draft %}{% endblock draft %}">
             <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
             <p>Draft</p>
           </a>
@@ -234,6 +234,20 @@
         </ul>
       </nav>
     </div>
+
+
+    {% if not is_student and not is_staff %}
+      <div style="position: relative; top: 94px; margin-bottom: 0px;" class="alert alert-warning alert-dismissible fade show " role="alert">
+        Your request for student has been submited succesfully. Your request is in review.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endif %}
+    {% if in_draft %}
+      <div style="position: relative; top: 94px; margin-bottom: 0px;" class="alert alert-danger alert-dismissible fade show " role="alert">
+         You have been removed from our student list.  
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endif %}
 
 {% if messages %}
   {% for message in messages %}

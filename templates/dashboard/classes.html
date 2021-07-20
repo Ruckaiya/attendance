@@ -1,0 +1,132 @@
+{% extends 'dashboard-base.html' %}
+{% block title %}WSB | Links{% endblock title %}
+{% block links %}dashboard-active{% endblock links %}
+
+
+
+{% block css %}
+<style>
+    .offcanvas {
+        width: 80vw !important;
+    }
+    .create-container{
+        display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    }
+
+    .link-details-container{
+        width: 95%;
+        height: 90%;
+        margin: auto auto;
+        overflow: auto;
+    }
+    
+    
+</style>
+{% endblock css %}
+
+
+{% block content %}
+
+
+
+<!-- Button trigger modal -->
+<div class="create-container">
+    <button type="button" class="btn btn-primary ml-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Create Link 
+    </button>
+</div>
+  
+<!--  Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Link</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <form action="/dashboard/classes/" method="POST">
+        {% csrf_token %}
+        <div class="modal-body">
+            <div class="mb-3">
+                <label for="class-name" class="form-label">Class Name</label>
+                <input required type="text" class="form-control" id="class-name" placeholder="Class Name" name="class-name">
+            </div>
+            <div class="mb-3">
+                <label for="time" class="form-label">Class Time</label>
+                <input required type="time" class="form-control" id="time" name="time">
+            </div>
+            <div class="mb-3">
+                <select name="students" required class="form-select" multiple aria-label="multiple select example">
+                    <option  disabled selected>Students</option>
+                    {% for student in students %}
+                    <option value="{{student.id}}">{{student.student.first_name|capfirst}} {{student.student.last_name|capfirst}} {{student.id}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Create Class</button>
+        </div>
+    </form>
+    </div>
+</div>
+</div>
+
+
+
+
+<table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Time</th>
+        <th scope="col">Total Students</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% load poll_extras  %}
+
+        {% for class in classes %}
+          
+            <tr onclick="forword('/dashboard/classes/{{class.id}}/')"  style="cursor: pointer;">
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{class.name}}</td>
+                <td>{{class.time}}</td>
+                <td>{{class.students.all|length}}</td>>
+            </tr>
+                        
+             
+        {% endfor %}
+        
+      
+    </tbody>
+  </table>
+<div >
+    
+</div>
+
+
+
+
+
+
+
+{% endblock content %}
+
+
+{% block js %}
+
+<script>
+    function forword(to) {
+        window.location = to
+    }
+</script>
+
+
+{% endblock js %}

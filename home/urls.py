@@ -8,6 +8,7 @@ urlpatterns = [
     path('profile/<int:id>/', views.profile),
     path('profile/edit/', views.editProfile),
     path('my-attendance/', views.myAttendance),
+    path('attendance/token/<str:token>/', views.attendance),
 
 
 ]
