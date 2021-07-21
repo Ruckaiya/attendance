@@ -47,20 +47,7 @@
           </a>
         </div>
 
-        <div class="dashboard-nav-item dashboard-drop-down-nav-item">
-          <a onclick="showOptions()" class="dashboard-nav-link dashboard-parent-dropdown  {% block current_links %}{% endblock current_links %} ">
-            <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
-            <p>Current Links</p>
-            <span class="dashboard-nav-badge">3</span>
-            <i class="fas fa-angle-left dashboard-dropdown-icon"></i>
-          </a>
-          <a style="margin-left: 15px;" href="/dashboard/links/{{linkTitle}}/{{linkId}}" class="dashboard-nav-link dashboard-drop-down-link ml-1">
-            <i class="dashboard-nav-icon fas fa-link"></i>
-            <p>WSB English (<span class="time" time-in="minutes">3.5 M</span>) </p>
-          </a>
-
-
-        </div>
+        
 
         <div class="dashboard-nav-item">
           <a href="/dashboard/classes/" class="dashboard-nav-link {% block classes %}{% endblock classes %}">
@@ -90,6 +77,12 @@
           <a href="/dashboard/students/draft/" class="dashboard-nav-link {% block draft %}{% endblock draft %}">
             <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
             <p>Draft</p>
+          </a>
+        </div>
+        <div class="dashboard-nav-item">
+          <a href="/dashboard/attendance/" class="dashboard-nav-link {% block attendance %}{% endblock attendance %}">
+            <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
+            <p>Attendance</p>
           </a>
         </div>
 

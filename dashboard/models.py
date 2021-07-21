@@ -64,6 +64,8 @@ class Link(models.Model):
 
 class Attendance(models.Model):
     student = models.ForeignKey(Student, verbose_name="Students", blank=False, on_delete=models.CASCADE)
+    # attendance_date = models.DateField("Attendance Date")
+    # attendance_time = models.TimeField("Attendance Time")
     attendance_date = models.DateField("Attendance Date", auto_now_add=True)
     attendance_time = models.TimeField("Attendance Time", auto_now_add=True)
     link = models.ForeignKey(Link, on_delete=models.SET_DEFAULT, default='Deleted', blank=False, null=False)

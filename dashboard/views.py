@@ -145,7 +145,9 @@ def classes(request, id=None):
         if(request.method == 'GET'):
             classes = Class.objects.all()
             context = {
-                'classes': classes
+                'classes': classes,
+                'students': Student.objects.all()
+
             }
             return render(request, 'dashboard/classes.html', context)
         elif(request.method == 'POST'):
@@ -277,18 +279,48 @@ def studentDraft(request):
 @staff_member_required
 def attendance(request):
     if request.method == 'GET':
-        # queryset = queryset.filter(date_created__range=(active_on, next_day) )
-        rangeMin = timezone.now() - datetime.timedelta(days=30)
-        rangeMax = timezone.now()
-        attendance = Attendance.objects.filter(attendance_date__range=(rangeMin, rangeMax))
-        print(rangeMin)
-        print(rangeMax)
-        context = {
-            'attendance':attendance
-        }
-    return render(request, 'dashboard/attendance.html')
-    
+        myFilter = None
+        month = None
+        class_name = None
+        try:
+            myFilter = request.GET['filter']
+            month = request.GET['month']
+            class_name = request.GET['class']
+        except Exception as e:
+            print(e)  
+        if(myFilter is not None and month is not None and class_name is not None):
+            myClass = Class.objects.filter(name=class_name).first()
+            students = myClass.students.all()
+            nowTime = timezone.now()
+            datetime_object = datetime.datetime.strptime(month, '%Y-%m')
+            print(datetime_object)
+            attendance_date = Attendance.objects.filter(attendance_date__month=datetime_object.month, attendance_date__year=datetime_object.year, link__class_name=myClass).order_by('attendance_date')
+            attendance_date_list = []
+            for date in attendance_date:
+                if(date.attendance_date not in attendance_date_list):
+                    attendance_date_list.append(date.attendance_date)
+            
+            context = {
+                'students':students,
+                'attendance_date':attendance_date_list,
+                'classes':Class.objects.all(),
+                'selectedClass': class_name,
+                'selectedMonth': month,
+                'filtered': True,
+                'myClass': myClass,
+            }
+            return render(request, 'dashboard/attendance.html', context)
+        else:
+            nowTime = timezone.now()
+            month = str(int(nowTime.month))
+            if(len(month) != 2):
+                month = '0'+month
 
+            year = str(int(nowTime.year))
+            context = {
+                'classes':Class.objects.all(),
+                'time': f"{year}-{month}"
+            }
+            return render(request, 'dashboard/attendance.html', context)
+    
        
-
-    
