@@ -63,7 +63,18 @@ def attendance(request, token=None):
         links = Link.objects.filter(token=token)
         if(len(links) != 0):
             link = links.first()
-            student = Student.objects.get(student=request.user)
+            student = None
+            try:
+                student = Student.objects.get(student=request.user)
+            except Exception as e:
+                messages.error(request, f"You are not a verified student")
+                return redirect('/')
+            
+            if(student not in links[0].class_name.students.all()):
+                messages.error(request, f"You are not a member of this class. PLease tell your teacher to add you in the class.")
+                return redirect('/')
+                    
+
             attendance = Attendance.objects.filter(link=link, student=student)
             if(len(attendance) == 0):
                 if((link.expiry - timezone.now()).total_seconds() > 0):

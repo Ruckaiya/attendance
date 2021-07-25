@@ -101,7 +101,7 @@
     <tbody>
     {% load poll_extras  %}
 
-        {% for students in class.students.all %}
+        {% for student in class.students.all %}
           
             <tr   style="cursor: pointer;">
                 <th scope="row">{{forloop.counter}}</th>
