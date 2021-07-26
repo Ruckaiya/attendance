@@ -1,5 +1,5 @@
 from django.utils import tree
-from animate import animation_classes
+from home.animate import animation_classes
 from random import choice
 from django.conf import settings
 
