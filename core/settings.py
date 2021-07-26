@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ('SECRET_KEY')
+SECRET_KEY = "django-insecure-=(zy06n7x=y#&rk4zb22jp^#l(upu5o6r18m=5s1(ernq#@^zx"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -162,7 +162,7 @@ STATIC_ROOT = BASE_DIR / 'static'
 
 
 
-BASE_URL = os.environ('BASE_URL')
+BASE_URL = 'https://wsbattendance.herokuapp.com/'
 
 
 
