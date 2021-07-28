@@ -12,6 +12,7 @@
         <th scope="col">Email</th>
         <th scope="col">Age</th>
         <th scope="col">Number</th>
+        <th scope="col">Addtional Number</th>
         <th scope="col">Action</th>
       </tr>
     </thead>
@@ -20,12 +21,13 @@
 
         {% for student in students %}
           
-            <tr onclick="forword({{student.id}})"  style="cursor: pointer;">
+            <tr >
                 <th scope="row">{{forloop.counter}}</th>
-                <td>{{student.student.first_name}} {{student.student.last_name}}</td>
+                <td>{{student.student.first_name}} {{student.student.last_name}} {{student.student.id}}</td>
                 <td>{{student.student.email}}</td>
                 <td>{{student.student.age}}</td>
                 <td>{{student.student.number}}</td>
+                <td>{{student.student.addtional_number}}</td>
                 <td>
                     <form action="/dashboard/students/" method="post">
                         {% csrf_token %}

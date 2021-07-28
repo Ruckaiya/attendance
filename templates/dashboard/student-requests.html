@@ -22,7 +22,7 @@
     {% load poll_extras  %}
 
         {% for student in students %}
-            <tr onclick="forword({{student.id}})"  style="cursor: pointer;">
+            <tr   style="cursor: pointer;">
                 <th scope="row">{{forloop.counter}}</th>
                 <td>{{student.first_name}} {{student.last_name}}</td>
                 <td>{{student.email}}</td>

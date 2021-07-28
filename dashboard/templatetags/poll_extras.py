@@ -38,6 +38,11 @@ def getValues(date, selectedClass):
     return data
 
 
+@register.filter
+def isExpired(link):
+    return (link.expiry - timezone.now()).total_seconds() > 0
+
+
 
 @register.simple_tag
 def define(val=None):

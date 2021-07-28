@@ -20,13 +20,13 @@
   <div id="dashboard-slidebar" class="dashboard-sidebar ">
     <div class="dashboard-slidebar-cont">
       <a href="/" class="dashboard-logo-cont item-margin-top">
-        <div class="dashboard-logo"></div>
+        <div class="dashboard-logo" style="width:100px; border:none; background-image: url({% static 'img/logo.png' %})"></div>
         <h3 class="dashboard-logo-text">WSB</h3>
       </a>
 
       <a href="/" class="dashboard-profile-cont item-margin-top">
-        <div class="dashboard-profile-img"></div>
-        <div style="display: flex; justify-content: center; align-items: center; width: auto;">
+        {% comment %} <div class="dashboard-profile-img"></div> {% endcomment %}
+        <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
           <h3 style="position: relative; top: 3px;" class="dashboard-profile-name">Jimam Tamimi </h3>
           <i style="position: relative; right: 19px; color: #7f7f7f;" class="
           
@@ -40,12 +40,12 @@
 
 
       {% if user.is_superuser or user.is_staff%}
-        <div class="dashboard-nav-item">
+        {% comment %} <div class="dashboard-nav-item">
           <a href="/" class="dashboard-nav-link {% block dashboard %}{% endblock dashboard %}">
             <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
             <p>Dashboard</p>
           </a>
-        </div>
+        </div> {% endcomment %}
 
         
 
@@ -105,60 +105,16 @@
             <p>Edit Profile</p>
           </a>
         </div>
-        <div class="dashboard-nav-item">
+        {% comment %} <div class="dashboard-nav-item">
           <a href="/my-attendance/" class="dashboard-nav-link {% block edit_profile %}{% endblock edit_profile %}">
             <i class="dashboard-nav-icon fas fa-school"></i>
             <p>My Attendance</p>
           </a>
-        </div>
+        </div> {% endcomment %}
 
       {% endif %}
 
 
-      
-
-{% comment %} 
-      <p class="dashboard-nav-header">Contact Options</p>
-      <hr />
-      <div class="dashboard-nav-item">
-        <a href="/dashboard.html" class="dashboard-nav-link">
-          <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
-          <p>Messages</p>
-        </a>
-      </div>
-
-      <p class="dashboard-nav-header">Profile Options</p>
-      <hr />
-
-      <div class="dashboard-nav-item">
-        <a href="/dashboard.html" class="dashboard-nav-link">
-          <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
-          <p>My Profile</p>
-        </a>
-      </div>
-
-      <p class="dashboard-nav-header">Settings</p>
-      <hr />
-
-      <div class="dashboard-nav-item dashboard-drop-down-nav-item">
-        <a onclick="showOptions()" class="dashboard-nav-link dashboard-parent-dropdown">
-          <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
-          <p>Settings</p>
-          <i class="fas fa-angle-left dashboard-dropdown-icon"></i>
-        </a>
-        <a href="/dashboard.html" class="dashboard-nav-link dashboard-drop-down-link">
-          <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
-          <p>Help People</p>
-        </a>
-        <a href="/dashboard.html" class="dashboard-nav-link dashboard-drop-down-link">
-          <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
-          <p>Help People</p>
-        </a>
-        <a href="/dashboard.html" class="dashboard-nav-link dashboard-drop-down-link">
-          <i class="dashboard-nav-icon fas fa-tachometer-alt"></i>
-          <p>Help People</p>
-        </a>
-      </div> {% endcomment %}
     </div>
   </div>
 
@@ -170,12 +126,12 @@
             <i class="fas fa-bars dashboard-slidebar-toggler" aria-hidden="true"></i>
           </li>
           <li>
-            <form class="dashboard-search-box-wraper">
+            {% comment %} <form class="dashboard-search-box-wraper">
               <input placeholder="Search" type="text" class="dashboard-search-box" />
               <button class="dashboard-search-submit" type="submit">
                 <i class="fas fa-search" aria-hidden="true"></i>
               </button>
-            </form>
+            </form> {% endcomment %}
           </li>
         </ul>
 
@@ -186,7 +142,7 @@
               <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
             </li>
           </form>
-
+{% comment %} 
           <li id="dashboard-message-icon" class="dashboard-right-nav-icon-wraper">
             <i class="far fa-comment-dots"></i> <span class="dashboard-badge">33</span>
           </li>
@@ -220,7 +176,7 @@
                 
               </div>
             </div>
-          </div>
+          </div> {% endcomment %}
           <li id="dashboard-go-full-screen-icon" class="dashboard-right-nav-icon-wraper">
             <i class="fas fa-expand-arrows-alt"></i>
           </li>
@@ -256,12 +212,12 @@
     {% block content %}{% endblock content %}
     
     </div>
-    <footer class="dashboard-footer-cont">
+    {% comment %} <footer class="dashboard-footer-cont">
       <div class="dashboard-footer">
         <strong>Copyright © 2014-2020
           <a class="dashboard-footer-link" href="#">World School Of BD</a>.</strong>
       </div>
-    </footer>
+    </footer> {% endcomment %}
   </div>
 
   {% block js %}{% endblock js %}

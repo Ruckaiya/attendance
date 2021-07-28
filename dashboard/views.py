@@ -17,7 +17,7 @@ from json import loads
 
 @staff_member_required
 def dashboard(request):
-    return render(request, 'dashboard/index.html')
+    return redirect('/dashboard/classes/')
 
 
 

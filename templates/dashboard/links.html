@@ -88,49 +88,115 @@
 </div>
 </div>
 
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Active Links</button>
+    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Expired Links</button>
+  </div>
+</nav>
 
 
 
-<table class="table table-striped table-hover">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Class</th>
-        <th scope="col">Code</th>
-        <th scope="col">Date</th>
-        <th scope="col">Expiry</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% load poll_extras  %}
 
-        {% for link in links %}
-          
-            <tr data-bs-toggle="offcanvas" data-bs-target="#{{link.token|makeClass}}" aria-controls="{{link.token|makeClass}}" style="cursor: pointer;">
-                <th scope="row">{{forloop.counter}}</th>
-                <td>{{link.class_name}}</td>
-                <td>{{link.code}}</td>
-                <td>{{link.timestamp}}</td>
-                <td>{{link.expiry}}</td>
-            </tr>
-                        
-            <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="{{link.token|makeClass}}" aria-labelledby="{{link.token|makeClass}}Label">
-                <div class="link-details-container">
-                    <h2 class="my-3"><b><u>{{link.class_name}}</u></b></h2>
-                    <h5 class="my-3"><b>Time Created: </b> {{link.timestamp}}</h5>
-                    <h5 class="my-3"><b>Expiry: </b> {{link.expiry}}</h5>
-                    <div class="my-3">
-                        
-                        <p><b>Link: </b> <input onclick="copyText(this)" class="text-primary" style="width: 90%; outline: none; border: none; cursor: pointer;" type="text" readonly="true"   id="{{link.token|makeClass}}-id" value="{{BASE_URL}}attendance/token/{{link.token}}/"> </p>
-                    </div>
-                    <button onclick="forword('/dashboard/links/{{link.id}}/')" class="btn btn-primary my-3">View</button>
-                </div>
-            </div>        
-        {% endfor %}
-        
-      
-    </tbody>
-  </table>
+    
+
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Class</th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Expiry</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% load poll_extras  %}
+
+                    {% for link in links %}
+                        {% if  link|isExpired %}
+                            <tr data-bs-toggle="offcanvas" data-bs-target="#{{link.token|makeClass}}" aria-controls="{{link.token|makeClass}}" style="cursor: pointer;">
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{link.class_name}}</td>
+                                <td>{{link.code}}</td>
+                                <td>{{link.timestamp}}</td>
+                                <td>{{link.expiry}}</td>
+                            </tr>
+                                        
+                            <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="{{link.token|makeClass}}" aria-labelledby="{{link.token|makeClass}}Label">
+                                <div class="link-details-container">
+                                    <h2 class="my-3"><b><u>{{link.class_name}}</u></b></h2>
+                                    <h5 class="my-3"><b>Time Created: </b> {{link.timestamp}}</h5>
+                                    <h5 class="my-3"><b>Expiry: </b> {{link.expiry}}</h5>
+                                    <div class="my-3">
+                                        
+                                        <p><b>Link: </b> <input onclick="copyText(this)" class="text-primary" style="width: 90%; outline: none; border: none; cursor: pointer;" type="text" readonly="true"   id="{{link.token|makeClass}}-id" value="{{BASE_URL}}attendance/token/{{link.token}}/"> </p>
+                                    </div>
+                                    <button onclick="forword('/dashboard/links/{{link.id}}/')" class="btn btn-primary my-3">View</button>
+                                </div>
+                            </div>        
+                        {% endif %}
+
+                    {% endfor %}
+                    
+                
+                </tbody>
+            </table>
+
+        </div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Class</th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Expiry</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% load poll_extras  %}
+
+                    {% for link in links %}
+                        {% if not  link|isExpired %}
+                            <tr data-bs-toggle="offcanvas" data-bs-target="#{{link.token|makeClass}}" aria-controls="{{link.token|makeClass}}" style="cursor: pointer;">
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{link.class_name}}</td>
+                                <td>{{link.code}}</td>
+                                <td>{{link.timestamp}}</td>
+                                <td>{{link.expiry}}</td>
+                            </tr>
+                                        
+                            <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="{{link.token|makeClass}}" aria-labelledby="{{link.token|makeClass}}Label">
+                                <div class="link-details-container">
+                                    <h2 class="my-3"><b><u>{{link.class_name}}</u></b></h2>
+                                    <h5 class="my-3"><b>Time Created: </b> {{link.timestamp}}</h5>
+                                    <h5 class="my-3"><b>Expiry: </b> {{link.expiry}}</h5>
+                                    <div class="my-3">
+                                        
+                                        <p><b>Link: </b> <input onclick="copyText(this)" class="text-primary" style="width: 90%; outline: none; border: none; cursor: pointer;" type="text" readonly="true"   id="{{link.token|makeClass}}-id" value="{{BASE_URL}}attendance/token/{{link.token}}/"> </p>
+                                    </div>
+                                    <button onclick="forword('/dashboard/links/{{link.id}}/')" class="btn btn-primary my-3">View</button>
+                                </div>
+                            </div>        
+                        {% endif %}
+
+                    {% endfor %}
+                    
+                
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+
+
+
 <div >
     
 </div>
