@@ -1,7 +1,7 @@
 from home.models import MyUser
 from django.core import exceptions
 from django.db import models
-from django.http.response import HttpResponse, HttpResponseNotFound
+from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
@@ -324,3 +324,17 @@ def attendance(request):
             return render(request, 'dashboard/attendance.html', context)
     
        
+
+@staff_member_required
+def deleteAttendance(request,  attendanceId):
+    if(request.method == 'POST'):        
+        try:
+            attendance = Attendance.objects.get(id=attendanceId)
+            attendance.delete()
+            messages.success(request, 'Successfully removed this attendance!!')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+        except Exception as e:
+            messages.error(request, 'This attendance is not available!!')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+

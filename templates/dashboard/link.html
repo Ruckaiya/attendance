@@ -95,6 +95,7 @@
         <th scope="col">#</th>
         <th scope="col">Name</th>
         <th scope="col">ID</th>
+        <th scope="col">Action</th>
       </tr>
     </thead>
     <tbody>
@@ -106,6 +107,13 @@
                 <th scope="row">{{forloop.counter}}</th>
                 <td>{{attend.student.student.first_name|capfirst}} {{attend.student.student.last_name|capfirst}}</td>
                 <td>{{attend.student.student.id}}</td>
+                <td>
+                <form action="/dashboard/attendance/{{attend.id }}/" method="post">
+                    {% csrf_token %}
+                    <button class="btn, btn-sm btn-primary" >Reject</button>
+                </form>
+                
+                </td>
                         
              
         {% endfor %}
