@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-=(zy06n7x=y#&rk4zb22jp^#l(upu5o6r18m=5s1(ernq#@^zx"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["wsb-attendance.herokuapp.com", 'localhost', '*']
+ALLOWED_HOSTS = ["wsb-attendance.herokuapp.com", 'localhost']
 
 
 # Application definition
@@ -151,14 +151,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # added by Jimam Tamimi
 
-
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static',
+#     '/var/www/static/',
+# ]
 
 
 STATIC_ROOT = BASE_DIR / 'static'
 
 
 
-BASE_URL = 'http://127.0.0.1:8000/'
+BASE_URL = 'https://wsb-attendance.herokuapp.com/'
 
 
 
